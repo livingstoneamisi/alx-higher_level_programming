@@ -690,6 +690,7 @@ Python lists:
 
 - Prototype: `void print_python_list(PyObject *p);`
 - Format: see example
+
 Python bytes:
 
 - Prototype: `void print_python_bytes(PyObject *p);`
@@ -697,6 +698,7 @@ Python bytes:
 - Line “first X bytes”: print a maximum of 10 bytes
 - If p is not a valid `PyBytesObject`, print an error message (see example)
 - Read `/usr/include/python3.4/bytesobject.h`
+
 About:
 
 - Python version: 3.4
