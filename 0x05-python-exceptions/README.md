@@ -136,6 +136,7 @@ guillaume@ubuntu:~/0x05$
   
 ## 2. Print and count integers
 `mandatory`
+
 Write a function that prints the first `x` elements of a list and only integers.
 
 - Prototype: `def safe_print_list_integers(my_list=[], x=0):`
@@ -576,7 +577,7 @@ About:
 **NOTE:**
 
 - The python script will be launched using the -u option (Force `stdout` to be unbuffered).
-- It is strongly advised to either use `setbuf(stdout, NULL);` or `fflush(stdout)` in your C functions IF you choose to use `printf`. The reason to that is that Python`s`print``and libC`s `printf` don’t share the same buffer, and the output can appear disordered.
+- It is strongly advised to either use `setbuf(stdout, NULL);` or `fflush(stdout)` in your C functions IF you choose to use `printf`. The reason to that is that Python`s`print `and libC`s `printf` don’t share the same buffer, and the output can appear disordered.
 
 ```
 julien@ubuntu:~/CPython$ python3 --version
