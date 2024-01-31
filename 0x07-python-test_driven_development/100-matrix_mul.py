@@ -2,42 +2,66 @@
 """Defines a matrix multiplication function."""
 
 
-def matrix_multiply(matrix_a, matrix_b):
+def matrix_mul(m_a, m_b):
     """Multiply two matrices.
 
     Args:
-        matrix_a (list of lists of ints/floats): The first matrix.
-        matrix_b (list of lists of ints/floats): The second matrix.
-
+        m_a (list of lists of ints/floats): The first matrix.
+        m_b (list of lists of ints/floats): The second matrix.
     Raises:
-        TypeError: If either matrix_a or matrix_b is not a list of lists of ints/floats.
-        TypeError: If either matrix_a or matrix_b is empty.
-        TypeError: If either matrix_a or matrix_b has different-sized rows.
-        ValueError: If matrix_a and matrix_b cannot be multiplied.
-
+        TypeError: If either m_a or m_b is not a list of lists of ints/floats.
+        TypeError: If either m_a or m_b is empty.
+        TypeError: If either m_a or m_b has different-sized rows.
+        ValueError: If m_a and m_b cannot be multiplied.
     Returns:
-        list of lists of ints/floats: A new matrix representing the multiplication of matrix_a by matrix_b.
+        A new matrix representing the multiplication of m_a by m_b.
     """
-    if not all(isinstance(matrix, list) for matrix in [matrix_a, matrix_b]):
-        raise TypeError("Both matrices must be lists")
 
-    if any(not matrix or not all(isinstance(ele, (int, float)) for ele in row) for matrix in [matrix_a, matrix_b]):
-        raise ValueError("Matrices cannot be empty and should contain only integers or floats")
+    if m_a == [] or m_a == [[]]:
+        raise ValueError("m_a can't be empty")
+    if m_b == [] or m_b == [[]]:
+        raise ValueError("m_b can't be empty")
 
-    if not all(len(row) == len(matrix_a[0]) for row in matrix_a) or not all(len(row) == len(matrix_b[0]) for row in matrix_b):
-        raise TypeError("Each row of matrices should be of the same size")
+    if not isinstance(m_a, list):
+        raise TypeError("m_a must be a list")
+    if not isinstance(m_b, list):
+        raise TypeError("m_b must be a list")
 
-    if len(matrix_a[0]) != len(matrix_b):
-        raise ValueError("Matrices cannot be multiplied")
+    if not all(isinstance(row, list) for row in m_a):
+        raise TypeError("m_a must be a list of lists")
+    if not all(isinstance(row, list) for row in m_b):
+        raise TypeError("m_b must be a list of lists")
 
-    # Transpose matrix_b using list comprehension
-    transposed_b = [[matrix_b[row][col] for row in range(len(matrix_b))] for col in range(len(matrix_b[0]))]
+    if not all((isinstance(ele, int) or isinstance(ele, float))
+               for ele in [num for row in m_a for num in row]):
+        raise TypeError("m_a should contain only integers or floats")
+    if not all((isinstance(ele, int) or isinstance(ele, float))
+               for ele in [num for row in m_b for num in row]):
+        raise TypeError("m_b should contain only integers or floats")
 
-    # Matrix multiplication using list comprehension
-    result_matrix = [
-        [sum(matrix_a[row][i] * transposed_b[col][i] for i in range(len(transposed_b[0])))
-         for col in range(len(transposed_b))]
-        for row in range(len(matrix_a))
-    ]
+    if not all(len(row) == len(m_a[0]) for row in m_a):
+        raise TypeError("each row of m_a must should be of the same size")
+    if not all(len(row) == len(m_b[0]) for row in m_b):
+        raise TypeError("each row of m_b must should be of the same size")
 
-    return result_matrix
+    if len(m_a[0]) != len(m_b):
+        raise ValueError("m_a and m_b can't be multiplied")
+
+    inverted_b = []
+    for r in range(len(m_b[0])):
+        new_row = []
+        for c in range(len(m_b)):
+            new_row.append(m_b[c][r])
+        inverted_b.append(new_row)
+
+    new_matrix = []
+    for row in m_a:
+        new_row = []
+        for col in inverted_b:
+            prod = 0
+            for i in range(len(inverted_b[0])):
+                prod += row[i] * col[i]
+            new_row.append(prod)
+        new_matrix.append(new_row)
+
+    return new_matrix
